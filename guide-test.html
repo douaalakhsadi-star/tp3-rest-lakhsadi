@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide touristique</title>
+</head>
+<body>
+
+<h1>Guide touristique</h1>
+
+<label for="countryInput">Entrez une ville ou un pays :</label>
+<input type="text" id="countryInput" placeholder="Nice">
+
+<button type="button" onclick="getTouristInfo()">Obtenir les informations</button>
+
+<div id="result"></div>
+
+<script>
+    function getTouristInfo() {
+        const lieu = document.getElementById("countryInput").value.trim();
+        const resultat = document.getElementById("result");
+
+        if (lieu === "") {
+            alert("Veuillez entrer le nom d'une ville ou d'un pays.");
+            return;
+        }
+
+        const xhr = new XMLHttpRequest();
+        const url = `http://localhost:8080/tp3-rest-lakhsadi-1.0-SNAPSHOT/api/guide/lieu/${encodeURIComponent(lieu)}`;
+
+        xhr.open("GET", url, true);
+        resultat.textContent = "Chargement…";
+
+        xhr.onload = function () {
+            if (xhr.status !== 200) {
+                resultat.textContent = `Erreur HTTP ${xhr.status}.`;
+                return;
+            }
+
+            const data = JSON.parse(xhr.responseText);
+
+            const titre = document.createElement("h2");
+            titre.textContent = `Informations sur ${data.ville_ou_pays}`;
+
+            const endroits = document.createElement("p");
+            endroits.textContent = `Endroits à visiter : ${data.endroits_a_visiter.join(", ")}`;
+
+            const prix = document.createElement("p");
+            prix.textContent = `Prix moyen d'un repas : ${data.prix_moyen_repas}`;
+
+            resultat.replaceChildren(titre, endroits, prix);
+        };
+
+        xhr.onerror = function () {
+            resultat.textContent = "Impossible de joindre l’API. Vérifiez que Payara tourne et que l’en-tête CORS est présent.";
+        };
+
+        xhr.send();
+    }
+</script>
+
+</body>
+</html>
