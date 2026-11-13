@@ -1,6 +1,7 @@
 package ma.emsi.lakhsadi.tp3restlakhsadi.llm;
 
 import dev.langchain4j.service.SystemMessage;
+import dev.langchain4j.service.Result;
 
 public interface GuideTouristique {
 
@@ -16,5 +17,5 @@ public interface GuideTouristique {
               "prix_moyen_repas": "<prix> <devise du pays>"
             }
             """)
-    InfosTouristiques conseiller(String demande);
+    Result<InfosTouristiques> conseiller(String demande);
 }

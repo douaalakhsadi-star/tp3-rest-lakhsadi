@@ -5,6 +5,7 @@ import dev.langchain4j.model.chat.request.ResponseFormat;
 import dev.langchain4j.model.google.genai.GoogleGenAiChatModel;
 import dev.langchain4j.service.AiServices;
 import jakarta.enterprise.context.ApplicationScoped;
+import dev.langchain4j.service.Result;
 
 @ApplicationScoped
 public class LlmClient {
@@ -23,9 +24,10 @@ public class LlmClient {
                 .build();
     }
 
-    public InfosTouristiques conseiller(String lieu, int nb) {
+    public Result<InfosTouristiques> conseiller(String lieu, int nb) {
         return guide.conseiller(
                 "Lieu : %s. Nombre de lieux à visiter : %d.".formatted(lieu, nb)
         );
     }
+
 }
