@@ -11,6 +11,7 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import ma.emsi.lakhsadi.tp3restlakhsadi.llm.LlmClient;
+import ma.emsi.lakhsadi.tp3restlakhsadi.llm.InfosTouristiques;
 
 @Path("/guide")
 public class GuideTouristiqueResource {
@@ -35,9 +36,9 @@ public class GuideTouristiqueResource {
             throw new BadRequestException("Le paramètre nb doit être un entier positif.");
         }
 
-        String reponseJson = llmClient.conseiller(lieu, nb);
+        InfosTouristiques infos = llmClient.conseiller(lieu, nb);
 
-        return Response.ok(reponseJson, MediaType.APPLICATION_JSON)
+        return Response.ok(infos, MediaType.APPLICATION_JSON)
                 .header("Access-Control-Allow-Origin", "*")
                 .build();
     }

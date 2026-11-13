@@ -23,7 +23,7 @@ public class LlmClient {
                 .build();
     }
 
-    public String conseiller(String lieu, int nb) {
+    public InfosTouristiques conseiller(String lieu, int nb) {
         return guide.conseiller(
                 "Lieu : %s. Nombre de lieux à visiter : %d.".formatted(lieu, nb)
         );

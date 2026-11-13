@@ -16,5 +16,5 @@ public interface GuideTouristique {
               "prix_moyen_repas": "<prix> <devise du pays>"
             }
             """)
-    String conseiller(String demande);
+    InfosTouristiques conseiller(String demande);
 }
